@@ -47,7 +47,7 @@ namespace Engine
 	{
 		if(!dataIsSent)
 		{
-			throw std::runtime_error("Data must be sent to GPU with send_data() before creating a vertex array object.");
+			throw std::runtime_error("Data must be sent to GPU with sendData() before creating a vertex array object.");
 		}
 
 		GLuint vertexArrayObject;
