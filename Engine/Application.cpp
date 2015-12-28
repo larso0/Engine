@@ -171,7 +171,7 @@ namespace Engine
 	{
 		return SDL_GetKeyboardState(nullptr);
 	}
-	
+
 	void Application::startup()
 	{
 	}

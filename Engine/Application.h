@@ -28,7 +28,8 @@ namespace Engine
 	public:
 		Application(int argc, char** argv);
 		virtual ~Application();
-
+		
+		void init();
 		void run();
 
 	protected:
@@ -64,8 +65,6 @@ namespace Engine
 
 		SDL_Window* window;
 		SDL_GLContext glContext;
-
-		void init();
 	};
 
 }

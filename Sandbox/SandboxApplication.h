@@ -15,15 +15,35 @@
 #define SANDBOXAPPLICATION_H
 
 #include <Application.h>
+#include <CubeGeometry.h>
+#include <Program.h>
 
 class SandboxApplication : public Engine::Application
 {
 public:
 	SandboxApplication(int argc, char** argv);
-	~SandboxApplication();
 private:
 	void startup() override;
+	void shutdown() override;
+	void resize(int w, int h) override;
 	void render(float deltaTime) override;
+	
+	Engine::Program program;
+	Engine::CubeGeometry cubeGeometry;
+	
+	glm::mat4 projectionMatrix;
+	float fov;
+	float near;
+	float far;
+	
+	glm::mat4 viewMatrix;
+	glm::vec3 eye;
+	glm::vec3 lookAt;
+	glm::vec3 up;
+	
+	GLint mvpMatrixLocation;
+	GLint normalMatrixLocation;
+	GLuint cubeVAO;
 };
 
 #endif /* SANDBOXAPPLICATION_H */
