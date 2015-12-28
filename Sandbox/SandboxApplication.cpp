@@ -22,7 +22,7 @@ Engine::Application(argc, argv),
 fov(60.f),
 near(0.1f),
 far(100.f),
-eye(0.f, 1.f, 2.f),
+eye(0.f, 1.f, 1.f),
 lookAt(0.f, 0.f, 0.f),
 up(0.f, 1.f, 0.f),
 mvpMatrixLocation(0),
@@ -49,12 +49,16 @@ void SandboxApplication::startup()
 	GLint vUV = 2; //program.getAttributeLocation("vUV");
 
 	cubeGeometry.sendData();
+	
+	program.use();
 	cubeVAO = cubeGeometry.createVertexArrayObject(vPosition, vNormal, vUV);
 
 	mvpMatrixLocation = program.getUniformLocation("mvpMatrix");
 	normalMatrixLocation = program.getUniformLocation("normalMatrix");
 
 	viewMatrix = glm::lookAt(eye, lookAt, up);
+	
+	glEnable(GL_CULL_FACE);
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 }
