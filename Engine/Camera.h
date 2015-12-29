@@ -19,7 +19,6 @@ namespace Engine
 	public:
 		Camera(Node* parent = nullptr);
 		virtual ~Camera();
-		virtual void update() override;
 		
 		void moveForward(float amount);
 		void moveBackward(float amount);
@@ -29,6 +28,10 @@ namespace Engine
 		void moveRight(float amount);
 		
 		const glm::mat4& getViewMatrix() const;
+		
+	protected:
+		virtual void update() override;
+		
 	private:
 		glm::vec3 direction;
 		glm::vec3 up;

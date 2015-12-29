@@ -20,8 +20,7 @@ namespace Engine
 	DEFINE_META(Node);
 
 	Node::Node(Node* parent) :
-	parent(parent),
-	needsUpdate_(false)
+	parent(parent)
 	{
 		if(parent != nullptr)
 		{
@@ -78,7 +77,6 @@ namespace Engine
 		position = glm::vec3(worldMatrix * glm::vec4(0.f, 0.f, 0.f, 1.f));
 
 		transformationMatrix = worldMatrix;
-		needsUpdate_ = false;
 		
 		for(Node* child : children)
 		{
@@ -91,33 +89,35 @@ namespace Engine
 		translationVector.x += x;
 		translationVector.y += y;
 		translationVector.z += z;
-		needsUpdate_ = true;
+		update();
 	}
 
 	void Node::translate(glm::vec3 t)
 	{
 		translationVector += t;
-		needsUpdate_ = true;
+		update();
 	}
 
 	void Node::rotate(float x, float y, float z)
 	{
-		rotate(glm::vec3(1.f, 0.f, 0.f), x);
-		rotate(glm::vec3(0.f, 1.f, 0.f), y);
-		rotate(glm::vec3(0.f, 0.f, 1.f), z);
+		rotationQuaternion *= glm::angleAxis(x, glm::vec3(1.f, 0.f, 0.f));
+		rotationQuaternion *= glm::angleAxis(y, glm::vec3(0.f, 1.f, 0.f));
+		rotationQuaternion *= glm::angleAxis(z, glm::vec3(0.f, 0.f, 1.f));
+		update();
 	}
 
 	void Node::rotate(glm::vec3 angles)
 	{
-		rotate(glm::vec3(1.f, 0.f, 0.f), angles.x);
-		rotate(glm::vec3(0.f, 1.f, 0.f), angles.y);
-		rotate(glm::vec3(0.f, 0.f, 1.f), angles.z);
+		rotationQuaternion *= glm::angleAxis(angles.x, glm::vec3(1.f, 0.f, 0.f));
+		rotationQuaternion *= glm::angleAxis(angles.y, glm::vec3(0.f, 1.f, 0.f));
+		rotationQuaternion *= glm::angleAxis(angles.z, glm::vec3(0.f, 0.f, 1.f));
+		update();
 	}
 
 	void Node::rotate(glm::vec3 axis, float angle)
 	{
 		rotationQuaternion *= glm::angleAxis(angle, glm::normalize(axis));
-		needsUpdate_ = true;
+		update();
 	}
 
 	void Node::setTranslation(float x, float y, float z)
@@ -184,13 +184,13 @@ namespace Engine
 	void Node::resetTranslation()
 	{
 		translationVector = defaultTranslationVector;
-		needsUpdate_ = true;
+		update();
 	}
 
 	void Node::resetRotation()
 	{
 		rotationQuaternion = defaultRotationQuaternion;
-		needsUpdate_ = true;
+		update();
 	}
 
 	const glm::vec3& Node::getPosition() const

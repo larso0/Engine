@@ -37,14 +37,15 @@ namespace Engine
 		void resetScale();
 
 		Geometry* getGeometry();
-
+		
+	protected:
+		virtual void update() override;
+		
 	private:
 		glm::vec3 scaleVector;
 		glm::vec3 defaultScaleVector;
 
 		Geometry* geometry;
-
-		virtual void update() override;
 	};
 }
 

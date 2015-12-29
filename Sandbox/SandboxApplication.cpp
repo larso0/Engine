@@ -48,7 +48,6 @@ void SandboxApplication::startup()
 	normalMatrixLocation = program.getUniformLocation("normalMatrix");
 	
 	camera.translate(0.f, 0.f, 2.f);
-	camera.update();
 	
 	glEnable(GL_CULL_FACE);
 
@@ -85,8 +84,6 @@ void SandboxApplication::render(float deltaTime)
 	{
 		camera.moveRight(deltaTime);
 	}
-	
-	camera.update();
 	
 	glClear(GL_COLOR_BUFFER_BIT);
 	glm::mat4 mvpMatrix = projectionMatrix * camera.getViewMatrix() *

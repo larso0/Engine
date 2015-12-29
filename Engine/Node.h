@@ -26,7 +26,6 @@ namespace Engine
 
 		void setParent(Node* parent);
 		void add(Node* child);
-		virtual void update();
 
 		//Transform the node relative to current transformations.
 		void translate(float x, float y, float z);
@@ -63,8 +62,9 @@ namespace Engine
 		glm::vec3 position;
 		glm::quat orientationQuaternion;
 		glm::mat4 transformationMatrix;
+		
+		virtual void update();
 
-		bool needsUpdate_;
 	private:
 		glm::mat4 worldMatrix;
 

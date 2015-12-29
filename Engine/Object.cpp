@@ -33,13 +33,13 @@ namespace Engine
 		scaleVector.x *= x;
 		scaleVector.y *= y;
 		scaleVector.z *= z;
-		needsUpdate_ = true;
+		update();
 	}
 
 	void Object::scale(glm::vec3 s)
 	{
 		scaleVector *= s;
-		needsUpdate_ = true;
+		update();
 	}
 
 	void Object::setScale(float x, float y, float z)
@@ -67,7 +67,7 @@ namespace Engine
 	void Object::resetScale()
 	{
 		scaleVector = defaultScaleVector;
-		needsUpdate_ = true;
+		update();
 	}
 
 	Geometry* Object::getGeometry()
