@@ -19,7 +19,7 @@ namespace Engine
 	public:
 		Camera(Node* parent = nullptr);
 		virtual ~Camera();
-		void update() override;
+		virtual void update() override;
 		
 		void moveForward(float amount);
 		void moveBackward(float amount);

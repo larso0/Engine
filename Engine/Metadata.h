@@ -18,7 +18,7 @@ public:
 	inline bool instanceOf(std::string type)
 	{
 		Metadata* tmp = this;
-		for(; tmp->type != type; tmp = tmp->super);
+		for(; tmp != nullptr && tmp->type != type; tmp = tmp->super);
 		return tmp != nullptr;
 	}
 private:
@@ -30,7 +30,7 @@ private:
 #define DEFINE_META(type) Metadata meta ## type(#type)
 #define DEFINE_META_INHERIT(type, super) Metadata meta ## type(&meta ## super, #type)
 #define DECLARE_META_PTR(type) public: Metadata* meta = &meta ## type
-#define INSTANCE_OF(objectptr, type) objectptr->meta->instanceOf(#type)
+#define INSTANCE_OF(object, type) (object).meta->instanceOf(#type)
 
 #endif /* METADATA_H */
 

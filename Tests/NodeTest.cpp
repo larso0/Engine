@@ -6,9 +6,11 @@
  */
 
 #include <gtest/gtest.h>
-#include "Node.h"
+#include <Node.h>
+#include <Camera.h>
 
 using Engine::Node;
+using Engine::Camera;
 
 TEST(NodeTest, Translation)
 {
@@ -45,4 +47,14 @@ TEST(NodeTest, Rotation)
 	EXPECT_NEAR(-1.f, n2.getPosition().x, 0.00001f);
 	EXPECT_NEAR(0.f, n2.getPosition().y, 0.00001f);
 	EXPECT_NEAR(0.f, n2.getPosition().z, 0.00001f);
+}
+
+TEST(NodeTest, Metainfo)
+{
+	Node node;
+	Camera cam;
+	EXPECT_TRUE(INSTANCE_OF(node, Node));
+	EXPECT_TRUE(INSTANCE_OF(cam, Node));
+	EXPECT_TRUE(INSTANCE_OF(cam, Camera));
+	EXPECT_FALSE(INSTANCE_OF(node, Camera));
 }
