@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   SandboxApplication.h
  * Author: larso
@@ -17,6 +11,7 @@
 #include <Application.h>
 #include <CubeGeometry.h>
 #include <Program.h>
+#include <Camera.h>
 
 class SandboxApplication : public Engine::Application
 {
@@ -30,16 +25,12 @@ private:
 	
 	Engine::Program program;
 	Engine::CubeGeometry cubeGeometry;
+	Engine::Camera camera;
 	
 	glm::mat4 projectionMatrix;
 	float fov;
 	float near;
 	float far;
-	
-	glm::mat4 viewMatrix;
-	glm::vec3 eye;
-	glm::vec3 lookAt;
-	glm::vec3 up;
 	
 	GLint mvpMatrixLocation;
 	GLint normalMatrixLocation;

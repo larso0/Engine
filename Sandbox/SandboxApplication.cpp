@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   SandboxApplication.cpp
  * Author: larso
@@ -19,12 +13,9 @@ using namespace Engine;
 
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
-fov(60.f),
+fov(70.f),
 near(0.1f),
-far(100.f),
-eye(0.f, 1.f, 1.f),
-lookAt(0.f, 0.f, 0.f),
-up(0.f, 1.f, 0.f),
+far(1000.f),
 mvpMatrixLocation(0),
 normalMatrixLocation(0),
 cubeVAO(0)
@@ -55,8 +46,9 @@ void SandboxApplication::startup()
 
 	mvpMatrixLocation = program.getUniformLocation("mvpMatrix");
 	normalMatrixLocation = program.getUniformLocation("normalMatrix");
-
-	viewMatrix = glm::lookAt(eye, lookAt, up);
+	
+	camera.translate(0.f, 0.f, 2.f);
+	camera.update();
 	
 	glEnable(GL_CULL_FACE);
 
@@ -76,8 +68,28 @@ void SandboxApplication::resize(int w, int h)
 
 void SandboxApplication::render(float deltaTime)
 {
+	const Uint8* keys = keyboardState();
+	if(keys[SDL_SCANCODE_W])
+	{
+		camera.moveForward(deltaTime);
+	}
+	if(keys[SDL_SCANCODE_S])
+	{
+		camera.moveBackward(deltaTime);
+	}
+	if(keys[SDL_SCANCODE_A])
+	{
+		camera.moveLeft(deltaTime);
+	}
+	if(keys[SDL_SCANCODE_D])
+	{
+		camera.moveRight(deltaTime);
+	}
+	
+	camera.update();
+	
 	glClear(GL_COLOR_BUFFER_BIT);
-	glm::mat4 mvpMatrix = projectionMatrix * viewMatrix *
+	glm::mat4 mvpMatrix = projectionMatrix * camera.getViewMatrix() *
 		glm::rotate(glm::mat4(), currentTime, glm::vec3(0.f, 1.f, 0.f));
 	glm::mat3 normalMatrix = glm::inverse(glm::mat3(mvpMatrix));
 	glUniformMatrix4fv(mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
