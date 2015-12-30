@@ -59,6 +59,15 @@ namespace Engine
 		child->setParent(this);
 	}
 
+	void Node::traverse(std::function<void(Node*)> f)
+	{
+		f(this);
+		for(Node* child : children)
+		{
+			child->traverse(f);
+		}
+	}
+
 	void Node::update()
 	{
 		if(parent == nullptr)

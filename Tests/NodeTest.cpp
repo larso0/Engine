@@ -51,8 +51,8 @@ TEST(NodeTest, Metainfo)
 {
 	Node node;
 	Camera cam;
-	EXPECT_TRUE(INSTANCE_OF(node, Node));
-	EXPECT_TRUE(INSTANCE_OF(cam, Node));
-	EXPECT_TRUE(INSTANCE_OF(cam, Camera));
-	EXPECT_FALSE(INSTANCE_OF(node, Camera));
+	EXPECT_TRUE(INSTANCE_OF(&node, Node));
+	EXPECT_TRUE(INSTANCE_OF(&cam, Node));
+	EXPECT_TRUE(INSTANCE_OF(&cam, Camera));
+	EXPECT_FALSE(INSTANCE_OF(&node, Camera));
 }

@@ -13,6 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include "Metadata.h"
+#include <functional>
 
 namespace Engine
 {
@@ -26,6 +27,7 @@ namespace Engine
 
 		void setParent(Node* parent);
 		void add(Node* child);
+		void traverse(std::function<void(Node*)> f);
 
 		//Transform the node relative to current transformations.
 		void translate(float x, float y, float z);
