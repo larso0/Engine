@@ -18,6 +18,7 @@ namespace Engine
 	defaultScaleVector(1.f, 1.f, 1.f),
 	geometry(geometry)
 	{
+		INHERIT_META_PTR(Object);
 		if(geometry == nullptr)
 		{
 			throw std::invalid_argument("Geometry pointer was a nullpointer.");

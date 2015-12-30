@@ -15,7 +15,6 @@ namespace Engine
 	DECLARE_META(Camera);
 	class Camera : public Node
 	{
-		DECLARE_META_PTR(Camera);
 	public:
 		Camera(Node* parent = nullptr);
 		virtual ~Camera();

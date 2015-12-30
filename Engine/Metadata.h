@@ -30,6 +30,7 @@ private:
 #define DEFINE_META(type) Metadata meta ## type(#type)
 #define DEFINE_META_INHERIT(type, super) Metadata meta ## type(&meta ## super, #type)
 #define DECLARE_META_PTR(type) public: Metadata* meta = &meta ## type
+#define INHERIT_META_PTR(type) meta = &meta ## type
 #define INSTANCE_OF(objectptr, type) (objectptr)->meta->instanceOf(#type)
 
 #endif /* METADATA_H */

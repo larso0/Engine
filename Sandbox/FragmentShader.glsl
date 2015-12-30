@@ -7,5 +7,6 @@ out vec4 fColor;
 
 void main()
 {
-    fColor = vec4(fNormal, 1.0) + vec4(0.5f, 0.5f, 0.5f, 1.f);
+    float dummy = fUV.x / fUV.x;
+    fColor = vec4(fNormal, 1.0) + vec4(0.5f, 0.5f, 0.5f, 1.f)*dummy;
 }

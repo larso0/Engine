@@ -69,28 +69,32 @@ namespace Engine
 				drawableNodes.push_back((Object*)node);
 			}
 		});
-		std::sort(drawableNodes.begin(), drawableNodes.end(),
-				[](Object* a, Object * b) -> bool
-				{
-					return a->getGeometry() < b->getGeometry();
-				});
 
-		Geometry* currentGeometry = drawableNodes[0]->getGeometry();
-		useGeometry(currentGeometry);
-		for(Object* obj : drawableNodes)
+		if(drawableNodes.size() > 0)
 		{
-			if(obj->getGeometry() != currentGeometry)
-			{
-				currentGeometry = obj->getGeometry();
-				useGeometry(currentGeometry);
-			}
-			glm::mat4 mvpMatrix = projectionMatrix * camera->getViewMatrix() * obj->getTransformationMatrix();
-			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvpMatrix)));
-			glUniformMatrix4fv(mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
-			glUniformMatrix3fv(normalMatrixLocation, 1, GL_FALSE, glm::value_ptr(normalMatrix));
-			currentGeometry->draw();
-		}
+			program->use();
+			std::sort(drawableNodes.begin(), drawableNodes.end(),
+					[](Object* a, Object * b) -> bool
+					{
+						return a->getGeometry() < b->getGeometry();
+					});
 
+			Geometry* currentGeometry = drawableNodes[0]->getGeometry();
+			useGeometry(currentGeometry);
+			for(Object* obj : drawableNodes)
+			{
+				if(obj->getGeometry() != currentGeometry)
+				{
+					currentGeometry = obj->getGeometry();
+					useGeometry(currentGeometry);
+				}
+				glm::mat4 mvpMatrix = projectionMatrix * camera->getViewMatrix() * obj->getTransformationMatrix();
+				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvpMatrix)));
+				glUniformMatrix4fv(mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
+				glUniformMatrix3fv(normalMatrixLocation, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+				currentGeometry->draw();
+			}
+		}
 	}
 
 	void Renderer::setFieldOfView(float fov)

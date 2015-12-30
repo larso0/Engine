@@ -16,7 +16,6 @@ namespace Engine
 	DECLARE_META(Object);
 	class Object : public Node
 	{
-		DECLARE_META_PTR(Object);
 	public:
 		Object(Geometry* geometry);
 		virtual ~Object();

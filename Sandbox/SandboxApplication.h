@@ -12,6 +12,8 @@
 #include <CubeGeometry.h>
 #include <Program.h>
 #include <Camera.h>
+#include <Renderer.h>
+#include <Object.h>
 
 class SandboxApplication : public Engine::Application
 {
@@ -25,16 +27,10 @@ private:
 	
 	Engine::Program program;
 	Engine::CubeGeometry cubeGeometry;
+	Engine::Node scene;
+	Engine::Object cube1, cube2;
 	Engine::Camera camera;
-	
-	glm::mat4 projectionMatrix;
-	float fov;
-	float near;
-	float far;
-	
-	GLint mvpMatrixLocation;
-	GLint normalMatrixLocation;
-	GLuint cubeVAO;
+	Engine::Renderer renderer;
 };
 
 #endif /* SANDBOXAPPLICATION_H */
