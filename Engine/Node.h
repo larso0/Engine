@@ -56,6 +56,7 @@ namespace Engine
 
 		const glm::vec3& getPosition() const;
 		const glm::mat4& getTransformationMatrix() const;
+		const glm::quat getOrientationQuaternion() const;
 
 	protected:
 		Node* parent;
@@ -63,11 +64,8 @@ namespace Engine
 
 		glm::vec3 position;
 		glm::quat orientationQuaternion;
-		glm::mat4 transformationMatrix;
 		
-		virtual void update();
-
-	private:
+		glm::mat4 transformationMatrix;
 		glm::mat4 worldMatrix;
 
 		glm::quat rotationQuaternion;
@@ -75,6 +73,8 @@ namespace Engine
 
 		glm::quat defaultRotationQuaternion;
 		glm::vec3 defaultTranslationVector;
+		
+		virtual void update();
 	};
 }
 

@@ -212,4 +212,9 @@ namespace Engine
 		return transformationMatrix;
 	}
 
+	const glm::quat Node::getOrientationQuaternion() const
+	{
+		return orientationQuaternion;
+	}
+
 }

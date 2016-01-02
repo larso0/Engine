@@ -14,7 +14,7 @@ using namespace Engine;
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
 cube1(&cubeGeometry), cube2(&cubeGeometry), renderer(&program),
-mouseSensitivity(-0.001f)
+mouseSensitivity(1000.f)
 {
 	setTitle("Sandbox");
 }
@@ -42,7 +42,7 @@ void SandboxApplication::startup()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	renderer.init();
-
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 }
 
@@ -86,8 +86,8 @@ void SandboxApplication::handleEvent(SDL_Event* event)
 	switch(event->type)
 	{
 	case SDL_MOUSEMOTION:
-		camera.yaw(mouseSensitivity*event->motion.xrel);
-		camera.pitch(mouseSensitivity*event->motion.yrel);
+		camera.motion(event->motion.xrel/mouseSensitivity,
+					  event->motion.yrel/mouseSensitivity);
 		break;
 	}
 }
