@@ -10,6 +10,7 @@
 
 #include "Node.h"
 #include "Geometry.h"
+#include "Material.h"
 
 namespace Engine
 {
@@ -17,7 +18,7 @@ namespace Engine
 	class Object : public Node
 	{
 	public:
-		Object(Geometry* geometry);
+		Object(Geometry* geometry, Material* material);
 		virtual ~Object();
 
 		//Scale the object relative to the current scale.
@@ -36,6 +37,7 @@ namespace Engine
 		void resetScale();
 
 		Geometry* getGeometry();
+		Material* getMaterial();
 		
 	protected:
 		virtual void update() override;
@@ -45,6 +47,7 @@ namespace Engine
 		glm::vec3 defaultScaleVector;
 
 		Geometry* geometry;
+		Material* material;
 	};
 }
 

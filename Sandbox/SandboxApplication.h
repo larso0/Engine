@@ -15,6 +15,8 @@
 #include <Camera.h>
 #include <Renderer.h>
 #include <Object.h>
+#include <Material.h>
+#include <Light.h>
 
 class SandboxApplication : public Engine::Application
 {
@@ -32,6 +34,8 @@ private:
 	Engine::PlaneGeometry planeGeometry;
 	Engine::Node scene;
 	Engine::Object cube1, cube2, plane;
+	Engine::Light lightSource;
+	Engine::Material m1, m2;
 	Engine::Camera camera;
 	Engine::Renderer renderer;
 	float mouseSensitivity;

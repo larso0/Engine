@@ -12,16 +12,21 @@ namespace Engine
 {
 	DEFINE_META_INHERIT(Object, Node);
 
-	Object::Object(Geometry* geometry) :
+	Object::Object(Geometry* geometry, Material* material) :
 	Node(),
 	scaleVector(1.f, 1.f, 1.f),
 	defaultScaleVector(1.f, 1.f, 1.f),
-	geometry(geometry)
+	geometry(geometry),
+	material(material)
 	{
 		INHERIT_META_PTR(Object);
 		if(geometry == nullptr)
 		{
 			throw std::invalid_argument("Geometry pointer was a nullpointer.");
+		}
+		if(material == nullptr)
+		{
+			throw std::invalid_argument("Material pointer was a nullpointer");
 		}
 	}
 
@@ -74,6 +79,11 @@ namespace Engine
 	Geometry* Object::getGeometry()
 	{
 		return geometry;
+	}
+
+	Material* Object::getMaterial()
+	{
+		return material;
 	}
 
 	void Object::update()

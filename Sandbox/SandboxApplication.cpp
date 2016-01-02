@@ -13,7 +13,7 @@ using namespace Engine;
 
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
-cube1(&cubeGeometry), cube2(&cubeGeometry), plane(&planeGeometry), renderer(&program),
+cube1(&cubeGeometry, &m1), cube2(&cubeGeometry, &m2), plane(&planeGeometry, &m1), renderer(&program),
 mouseSensitivity(1000.f)
 {
 	setTitle("Sandbox");
@@ -33,12 +33,18 @@ void SandboxApplication::startup()
 
 	cubeGeometry.sendData();
 	planeGeometry.sendData();
-	
+	m1.setColor(0.7f, 0.7f, 0.7f, 1.f);
+	m2.setColor(0.9f, 0.3f, 0.5f, 1.f);
+	m1.setLightSource(&lightSource);
+	m2.setLightSource(&lightSource);
+
 	scene.add(&camera);
+	scene.add(&lightSource);
 	scene.add(&plane);
 	scene.add(&cube1);
 	cube1.add(&cube2);
 	camera.translate(0.f, 1.f, 2.f);
+	lightSource.translate(0.f, 5.f, 0.f);
 	plane.scale(20.f, 20.f, 20.f);
 	cube1.translate(0.f, 0.75f, 0.f);
 	cube2.translate(1.5f, 0.f, 0.f);
@@ -80,6 +86,22 @@ void SandboxApplication::render(float deltaTime)
 	{
 		camera.moveRight(deltaTime);
 	}
+	if(keys[SDL_SCANCODE_I])
+	{
+		lightSource.translate(0.f, deltaTime, 0.f);
+	}
+	if(keys[SDL_SCANCODE_K])
+	{
+		lightSource.translate(0.f, -deltaTime, 0.f);
+	}
+	if(keys[SDL_SCANCODE_J])
+	{
+		lightSource.translate(-deltaTime, 0.f, 0.f);
+	}
+	if(keys[SDL_SCANCODE_I])
+	{
+		lightSource.translate(deltaTime, 0.f, 0.f);
+	}
 	cube1.rotate(glm::vec3(0.f, 1.f, 0.f), deltaTime);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -91,8 +113,8 @@ void SandboxApplication::handleEvent(SDL_Event* event)
 	switch(event->type)
 	{
 	case SDL_MOUSEMOTION:
-		camera.motion(event->motion.xrel/mouseSensitivity,
-					  event->motion.yrel/mouseSensitivity);
+		camera.motion(event->motion.xrel / mouseSensitivity,
+					event->motion.yrel / mouseSensitivity);
 		break;
 	}
 }

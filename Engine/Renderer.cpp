@@ -6,6 +6,7 @@
  */
 
 #include "Renderer.h"
+#include "Light.h"
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
@@ -22,6 +23,8 @@ namespace Engine
 	uvLocation(-1),
 	mvpMatrixLocation(-1),
 	normalMatrixLocation(-1),
+	objectColorLocation(-1),
+	lightPositionLocation(-1),
 	fieldOfView(60.f),
 	aspectRatio(1.f),
 	near(0.1f),
@@ -51,6 +54,8 @@ namespace Engine
 		uvLocation = program->getAttributeLocation("vUV");
 		mvpMatrixLocation = program->getUniformLocation("mvpMatrix");
 		normalMatrixLocation = program->getUniformLocation("normalMatrix");
+		objectColorLocation = program->getUniformLocation("objectColor");
+		lightPositionLocation = program->getUniformLocation("lightPosition");
 		initialized = true;
 	}
 
@@ -90,8 +95,18 @@ namespace Engine
 				}
 				glm::mat4 mvpMatrix = projectionMatrix * camera->getViewMatrix() * obj->getTransformationMatrix();
 				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvpMatrix)));
+				glm::vec4 color = obj->getMaterial()->getColor();
+				glm::vec3 lightPosition(0.f, 0.f, 0.f);
+				if(obj->getMaterial()->getLightSource() != nullptr)
+				{
+					glm::mat3 lightMatrix(projectionMatrix * camera->getViewMatrix() * 
+						obj->getMaterial()->getLightSource()->getTransformationMatrix());
+					lightPosition = lightMatrix * lightPosition;
+				}
 				glUniformMatrix4fv(mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 				glUniformMatrix3fv(normalMatrixLocation, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+				glUniform4fv(objectColorLocation, 1, glm::value_ptr(color));
+				glUniform3fv(lightPositionLocation, 1, glm::value_ptr(lightPosition));
 				currentGeometry->draw();
 			}
 		}

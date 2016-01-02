@@ -41,6 +41,8 @@ namespace Engine
 		GLint uvLocation;
 		GLint mvpMatrixLocation;
 		GLint normalMatrixLocation;
+		GLint objectColorLocation;
+		GLint lightPositionLocation;
 		
 		glm::mat4 projectionMatrix;
 		float fieldOfView;
