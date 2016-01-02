@@ -13,7 +13,8 @@ using namespace Engine;
 
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
-cube1(&cubeGeometry), cube2(&cubeGeometry), renderer(&program)
+cube1(&cubeGeometry), cube2(&cubeGeometry), renderer(&program),
+mouseSensitivity(-0.001f)
 {
 	setTitle("Sandbox");
 }
@@ -52,7 +53,7 @@ void SandboxApplication::shutdown()
 void SandboxApplication::resize(int w, int h)
 {
 	glViewport(0, 0, w, h);
-	renderer.setAspectRatio((float)w/h);
+	renderer.setAspectRatio((float)w / h);
 }
 
 void SandboxApplication::render(float deltaTime)
@@ -75,7 +76,18 @@ void SandboxApplication::render(float deltaTime)
 		camera.moveRight(deltaTime);
 	}
 	cube1.rotate(glm::vec3(0.f, 1.f, 0.f), deltaTime);
-	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	renderer.render(&scene, &camera);
+}
+
+void SandboxApplication::handleEvent(SDL_Event* event)
+{
+	switch(event->type)
+	{
+	case SDL_MOUSEMOTION:
+		camera.yaw(mouseSensitivity*event->motion.xrel);
+		camera.pitch(mouseSensitivity*event->motion.yrel);
+		break;
+	}
 }

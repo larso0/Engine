@@ -81,7 +81,7 @@ namespace Engine
 			worldMatrix = parent->worldMatrix *
 				glm::translate(glm::mat4(), translationVector) *
 				glm::mat4_cast(rotationQuaternion);
-			orientationQuaternion = parent->orientationQuaternion * rotationQuaternion;
+			orientationQuaternion = rotationQuaternion * parent->orientationQuaternion;
 		}
 		position = glm::vec3(worldMatrix * glm::vec4(0.f, 0.f, 0.f, 1.f));
 

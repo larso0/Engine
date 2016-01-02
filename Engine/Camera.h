@@ -25,6 +25,8 @@ namespace Engine
 		void moveDown(float amount);
 		void moveLeft(float amount);
 		void moveRight(float amount);
+		void yaw(float amount);
+		void pitch(float amount);
 		
 		const glm::mat4& getViewMatrix() const;
 		

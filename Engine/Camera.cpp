@@ -33,9 +33,8 @@ namespace Engine
 	void Camera::update()
 	{
 		Node::update();
-		direction = quatTransform(orientationQuaternion, direction);
-		up = quatTransform(orientationQuaternion, up);
-		right = glm::cross(direction, up);
+		direction = quatTransform(orientationQuaternion, glm::vec3(0.f, 0.f, -1.f));
+		right = quatTransform(orientationQuaternion, glm::vec3(1.f, 0.f, 0.f));
 		viewMatrix = glm::lookAt(position, position + direction, up);
 	}
 
@@ -67,6 +66,16 @@ namespace Engine
 	void Camera::moveRight(float amount)
 	{
 		translate(right * amount);
+	}
+
+	void Camera::yaw(float amount)
+	{
+		rotate(up, amount);
+	}
+
+	void Camera::pitch(float amount)
+	{
+		rotate(right, amount);
 	}
 
 	const glm::mat4& Camera::getViewMatrix() const

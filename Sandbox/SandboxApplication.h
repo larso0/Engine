@@ -24,6 +24,7 @@ private:
 	void shutdown() override;
 	void resize(int w, int h) override;
 	void render(float deltaTime) override;
+	void handleEvent(SDL_Event* event) override;
 	
 	Engine::Program program;
 	Engine::CubeGeometry cubeGeometry;
@@ -31,6 +32,7 @@ private:
 	Engine::Object cube1, cube2;
 	Engine::Camera camera;
 	Engine::Renderer renderer;
+	float mouseSensitivity;
 };
 
 #endif /* SANDBOXAPPLICATION_H */
