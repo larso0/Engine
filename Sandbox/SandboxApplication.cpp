@@ -13,7 +13,7 @@ using namespace Engine;
 
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
-cube1(&cubeGeometry), cube2(&cubeGeometry), renderer(&program),
+cube1(&cubeGeometry), cube2(&cubeGeometry), plane(&planeGeometry), renderer(&program),
 mouseSensitivity(1000.f)
 {
 	setTitle("Sandbox");
@@ -32,10 +32,15 @@ void SandboxApplication::startup()
 	program.link();
 
 	cubeGeometry.sendData();
+	planeGeometry.sendData();
+	
 	scene.add(&camera);
+	scene.add(&plane);
 	scene.add(&cube1);
 	cube1.add(&cube2);
-	camera.translate(0.f, 0.f, 2.f);
+	camera.translate(0.f, 1.f, 2.f);
+	plane.scale(20.f, 20.f, 20.f);
+	cube1.translate(0.f, 0.75f, 0.f);
 	cube2.translate(1.5f, 0.f, 0.f);
 	cube2.scale(0.5f, 2.f, 0.5f);
 

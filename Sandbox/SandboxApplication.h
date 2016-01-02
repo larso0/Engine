@@ -10,6 +10,7 @@
 
 #include <Application.h>
 #include <CubeGeometry.h>
+#include <PlaneGeometry.h>
 #include <Program.h>
 #include <Camera.h>
 #include <Renderer.h>
@@ -28,8 +29,9 @@ private:
 	
 	Engine::Program program;
 	Engine::CubeGeometry cubeGeometry;
+	Engine::PlaneGeometry planeGeometry;
 	Engine::Node scene;
-	Engine::Object cube1, cube2;
+	Engine::Object cube1, cube2, plane;
 	Engine::Camera camera;
 	Engine::Renderer renderer;
 	float mouseSensitivity;
