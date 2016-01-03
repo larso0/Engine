@@ -8,16 +8,22 @@ out vec3 fNormal;
 out vec2 fUV;
 out vec3 lightDirection;
 
-uniform mat4 mvpMatrix;
-uniform mat3 normalMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewProjectionMatrix;
+uniform vec4 orientationQuaternion;
 
 uniform vec3 lightPosition;
 
+vec3 quatTransform( vec4 q, vec3 v )
+{ 
+    return v + 2.0*cross(cross(v, q.xyz ) + q.w*v, q.xyz);
+}
+
 void main()
 {
-    vec4 pos = mvpMatrix * vec4(vPosition, 1.0);
+    vec4 pos = modelMatrix * vec4(vPosition, 1);
     lightDirection = normalize(lightPosition - pos.xyz);
-    fNormal = normalize(normalMatrix * vNormal);
+    fNormal = quatTransform(orientationQuaternion, vNormal);
     fUV = vUV;
-    gl_Position = pos;
+    gl_Position = viewProjectionMatrix * pos;
 }

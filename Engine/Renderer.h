@@ -39,8 +39,9 @@ namespace Engine
 		GLint positionLocation;
 		GLint normalLocation;
 		GLint uvLocation;
-		GLint mvpMatrixLocation;
-		GLint normalMatrixLocation;
+		GLint modelMatrixLocation;
+		GLint viewProjectionMatrixLocation;
+		GLint orientationQuaternionLocation;
 		GLint objectColorLocation;
 		GLint lightPositionLocation;
 		

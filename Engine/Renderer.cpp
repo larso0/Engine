@@ -21,8 +21,9 @@ namespace Engine
 	positionLocation(-1),
 	normalLocation(-1),
 	uvLocation(-1),
-	mvpMatrixLocation(-1),
-	normalMatrixLocation(-1),
+	modelMatrixLocation(-1),
+	viewProjectionMatrixLocation(-1),
+	orientationQuaternionLocation(-1),
 	objectColorLocation(-1),
 	lightPositionLocation(-1),
 	fieldOfView(60.f),
@@ -52,8 +53,9 @@ namespace Engine
 		positionLocation = program->getAttributeLocation("vPosition");
 		normalLocation = program->getAttributeLocation("vNormal");
 		uvLocation = program->getAttributeLocation("vUV");
-		mvpMatrixLocation = program->getUniformLocation("mvpMatrix");
-		normalMatrixLocation = program->getUniformLocation("normalMatrix");
+		modelMatrixLocation = program->getUniformLocation("modelMatrix");
+		viewProjectionMatrixLocation = program->getUniformLocation("viewProjectionMatrix");
+		orientationQuaternionLocation = program->getUniformLocation("orientationQuaternion");
 		objectColorLocation = program->getUniformLocation("objectColor");
 		lightPositionLocation = program->getUniformLocation("lightPosition");
 		initialized = true;
@@ -78,6 +80,10 @@ namespace Engine
 		if(drawableNodes.size() > 0)
 		{
 			program->use();
+			
+			glm::mat4 viewProjectionMatrix = projectionMatrix * camera->getViewMatrix();
+			glUniformMatrix4fv(viewProjectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewProjectionMatrix));
+			
 			std::sort(drawableNodes.begin(), drawableNodes.end(),
 					[](Object* a, Object * b) -> bool
 					{
@@ -93,18 +99,16 @@ namespace Engine
 					currentGeometry = obj->getGeometry();
 					useGeometry(currentGeometry);
 				}
-				glm::mat4 mvpMatrix = projectionMatrix * camera->getViewMatrix() * obj->getTransformationMatrix();
-				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(mvpMatrix)));
+				glm::mat4 modelMatrix = obj->getTransformationMatrix();
+				glm::quat orientationQuat = obj->getOrientationQuaternion();
 				glm::vec4 color = obj->getMaterial()->getColor();
 				glm::vec3 lightPosition(0.f, 0.f, 0.f);
 				if(obj->getMaterial()->getLightSource() != nullptr)
 				{
-					glm::mat3 lightMatrix(projectionMatrix * camera->getViewMatrix() * 
-						obj->getMaterial()->getLightSource()->getTransformationMatrix());
-					lightPosition = lightMatrix * lightPosition;
+					lightPosition = obj->getMaterial()->getLightSource()->getPosition();
 				}
-				glUniformMatrix4fv(mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
-				glUniformMatrix3fv(normalMatrixLocation, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+				glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+				glUniform4fv(orientationQuaternionLocation, 1, glm::value_ptr(orientationQuat));
 				glUniform4fv(objectColorLocation, 1, glm::value_ptr(color));
 				glUniform3fv(lightPositionLocation, 1, glm::value_ptr(lightPosition));
 				currentGeometry->draw();
