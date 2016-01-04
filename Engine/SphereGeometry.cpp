@@ -62,10 +62,10 @@ namespace Engine
 
 	glm::vec2 SphereGeometry::sphereUv(glm::vec3& p)
 	{
-		float twoPi = 2*M_PI;
+		float twoPi = 2 * M_PI;
 		glm::vec2 uv;
-        uv.x = 0.5f - ((float)atan2(p.z, p.x) / twoPi);
-        uv.y = 0.5f - 2.0f * ((float)asin(p.y) / twoPi);
+		uv.x = 0.5f - ((float)atan2(p.z, p.x) / twoPi);
+		uv.y = 0.5f - 2.0f * ((float)asin(p.y) / twoPi);
 		return uv;
 	}
 
