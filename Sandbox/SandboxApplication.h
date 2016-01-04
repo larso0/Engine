@@ -11,6 +11,7 @@
 #include <Application.h>
 #include <CubeGeometry.h>
 #include <PlaneGeometry.h>
+#include <SphereGeometry.h>
 #include <Program.h>
 #include <Camera.h>
 #include <Renderer.h>
@@ -32,8 +33,9 @@ private:
 	Engine::Program program;
 	Engine::CubeGeometry cubeGeometry;
 	Engine::PlaneGeometry planeGeometry;
+	Engine::SphereGeometry sphereGeometry;
 	Engine::Node scene;
-	Engine::Object cube1, cube2, plane;
+	Engine::Object cube1, cube2, plane, sphere;
 	Engine::Light lightSource;
 	Engine::Material m1, m2;
 	Engine::Camera camera;
