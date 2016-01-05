@@ -7,10 +7,12 @@ in vec2 vUV;
 out vec3 fNormal;
 out vec2 fUV;
 out vec3 lightDirection;
+out vec3 cameraDirection;
 
 uniform mat4 modelMatrix;
 uniform mat4 viewProjectionMatrix;
 uniform vec4 orientationQuaternion;
+uniform vec3 cameraPosition;
 
 uniform vec3 lightPosition;
 
@@ -23,6 +25,7 @@ void main()
 {
     vec4 pos = modelMatrix * vec4(vPosition, 1);
     lightDirection = normalize(lightPosition - pos.xyz);
+    cameraDirection = normalize(cameraPosition - pos.xyz);
     fNormal = quatTransform(orientationQuaternion, vNormal);
     fUV = vUV;
     gl_Position = viewProjectionMatrix * pos;

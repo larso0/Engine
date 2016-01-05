@@ -26,6 +26,7 @@ namespace Engine
 	orientationQuaternionLocation(-1),
 	objectColorLocation(-1),
 	lightPositionLocation(-1),
+	cameraPositionLocation(-1),
 	fieldOfView(60.f),
 	aspectRatio(1.f),
 	near(0.1f),
@@ -58,6 +59,7 @@ namespace Engine
 		orientationQuaternionLocation = program->getUniformLocation("orientationQuaternion");
 		objectColorLocation = program->getUniformLocation("objectColor");
 		lightPositionLocation = program->getUniformLocation("lightPosition");
+		cameraPositionLocation = program->getUniformLocation("cameraPosition");
 		initialized = true;
 	}
 
@@ -83,6 +85,8 @@ namespace Engine
 			
 			glm::mat4 viewProjectionMatrix = projectionMatrix * camera->getViewMatrix();
 			glUniformMatrix4fv(viewProjectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewProjectionMatrix));
+			glm::vec3 cameraPosition = camera->getPosition();
+			glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
 			
 			std::sort(drawableNodes.begin(), drawableNodes.end(),
 					[](Object* a, Object * b) -> bool
@@ -106,6 +110,10 @@ namespace Engine
 				if(obj->getMaterial()->getLightSource() != nullptr)
 				{
 					lightPosition = obj->getMaterial()->getLightSource()->getPosition();
+				}
+				if(obj->getMaterial()->getTexture() != nullptr)
+				{
+					obj->getMaterial()->getTexture()->bind();
 				}
 				glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 				glUniform4fv(orientationQuaternionLocation, 1, glm::value_ptr(orientationQuat));

@@ -12,13 +12,15 @@ namespace Engine
 
 	Material::Material() :
 	color(1.f, 1.f, 1.f, 1.f),
-	lightSource(nullptr)
+	lightSource(nullptr),
+	texture(nullptr)
 	{
 	}
 
 	Material::Material(glm::vec4 color) :
 	color(color),
-	lightSource(nullptr)
+	lightSource(nullptr),
+	texture(nullptr)
 	{
 	}
 
@@ -41,6 +43,11 @@ namespace Engine
 		this->lightSource = lightSource;
 	}
 
+	void Material::setTexture(Texture* texture)
+	{
+		this->texture = texture;
+	}
+
 	const glm::vec4& Material::getColor() const
 	{
 		return color;
@@ -49,6 +56,11 @@ namespace Engine
 	const Light* Material::getLightSource() const
 	{
 		return lightSource;
+	}
+
+	const Texture* Material::getTexture() const
+	{
+		return texture;
 	}
 
 }

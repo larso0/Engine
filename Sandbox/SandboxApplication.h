@@ -38,6 +38,7 @@ private:
 	Engine::Object cube1, cube2, plane, sphere;
 	Engine::Light lightSource;
 	Engine::Material m1, m2;
+	Engine::Texture wallTexture;
 	Engine::Camera camera;
 	Engine::Renderer renderer;
 	float mouseSensitivity;

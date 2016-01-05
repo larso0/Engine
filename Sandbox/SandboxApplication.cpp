@@ -16,6 +16,7 @@ Engine::Application(argc, argv),
 sphereGeometry(3),
 cube1(&cubeGeometry, &m1), cube2(&cubeGeometry, &m2),
 plane(&planeGeometry, &m1), sphere(&sphereGeometry, &m2),
+wallTexture("WallTexture.jpg"),
 renderer(&program),
 mouseSensitivity(1000.f)
 {
@@ -37,10 +38,13 @@ void SandboxApplication::startup()
 	cubeGeometry.sendData();
 	planeGeometry.sendData();
 	sphereGeometry.sendData();
+	wallTexture.init();
 	m1.setColor(0.7f, 0.7f, 0.7f, 1.f);
 	m2.setColor(0.9f, 0.3f, 0.5f, 1.f);
 	m1.setLightSource(&lightSource);
 	m2.setLightSource(&lightSource);
+	m1.setTexture(&wallTexture);
+	m2.setTexture(&wallTexture);
 
 	scene.add(&camera);
 	scene.add(&lightSource);

@@ -44,6 +44,7 @@ namespace Engine
 		GLint orientationQuaternionLocation;
 		GLint objectColorLocation;
 		GLint lightPositionLocation;
+		GLint cameraPositionLocation;
 		
 		glm::mat4 projectionMatrix;
 		float fieldOfView;
