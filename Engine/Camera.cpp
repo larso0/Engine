@@ -7,10 +7,12 @@
 
 #include "Camera.h"
 
-static glm::vec3 quatTransform(glm::quat q, glm::vec3 v)
+using namespace glm;
+
+static vec3 quatTransform(quat q, vec3 v)
 {
-	glm::quat tmp = q * glm::quat(0.f, v) * glm::conjugate(q);
-	return glm::vec3(tmp.x, tmp.y, tmp.z);
+	quat tmp = q * quat(0.f, v) * conjugate(q);
+	return vec3(tmp.x, tmp.y, tmp.z);
 }
 
 namespace Engine
@@ -32,18 +34,14 @@ namespace Engine
 
 	void Camera::update()
 	{
+		quat pitchYaw = angleAxis(pitchYawRoll.y, vec3(0.f, 1.f, 0.f)) *
+			angleAxis(pitchYawRoll.x, vec3(1.f, 0.f, 0.f));
+		rotationQuaternion = angleAxis(pitchYawRoll.z, direction) * pitchYaw;
 		Node::update();
-		direction = glm::normalize(quatTransform(orientationQuaternion, glm::vec3(0.f, 0.f, -1.f)));
-		if(parent == nullptr)
-		{
-			up = glm::vec3(0.f, 1.f, 0.f);
-		}
-		else
-		{
-			up = glm::normalize(quatTransform(parent->getOrientationQuaternion(), glm::vec3(0.f, 1.f, 0.f)));
-		}
-		right = glm::normalize(glm::cross(direction, up));
-		viewMatrix = glm::lookAt(position, position + direction, up);
+		direction = quatTransform(orientationQuaternion, vec3(0.f, 0.f, -1.f));
+		up = quatTransform(orientationQuaternion, vec3(0.f, 1.f, 0.f));
+		right = normalize(cross(direction, up));
+		viewMatrix = lookAt(position, position + direction, up);
 	}
 
 	void Camera::moveForward(float amount)
@@ -76,24 +74,14 @@ namespace Engine
 		translate(right * amount);
 	}
 
-	void Camera::yaw(float amount)
-	{
-		rotate(up, amount);
-	}
-
-	void Camera::pitch(float amount)
-	{
-		rotate(right, amount);
-	}
-
 	void Camera::motion(float x, float y)
 	{
-		rotationQuaternion *= glm::angleAxis(-y, right);
-		rotationQuaternion *= glm::angleAxis(-x, up);
+		pitchYawRoll.x -= y;
+		pitchYawRoll.y -= x;
 		update();
 	}
 
-	const glm::mat4& Camera::getViewMatrix() const
+	const mat4& Camera::getViewMatrix() const
 	{
 		return viewMatrix;
 	}

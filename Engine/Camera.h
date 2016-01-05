@@ -25,8 +25,6 @@ namespace Engine
 		void moveDown(float amount);
 		void moveLeft(float amount);
 		void moveRight(float amount);
-		void yaw(float amount);
-		void pitch(float amount);
 		void motion(float x, float y);
 		
 		const glm::mat4& getViewMatrix() const;
@@ -35,6 +33,7 @@ namespace Engine
 		virtual void update() override;
 		
 	private:
+		glm::vec3 pitchYawRoll;
 		glm::vec3 direction;
 		glm::vec3 up;
 		glm::vec3 right;
