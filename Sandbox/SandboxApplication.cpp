@@ -14,9 +14,9 @@ using namespace Engine;
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
 sphereGeometry(3),
-cube1(&cubeGeometry, &m1), cube2(&cubeGeometry, &m2),
-plane(&planeGeometry, &m1), sphere(&sphereGeometry, &m2),
-wallTexture("WallTexture.jpg"),
+cube1(&cubeGeometry, &m2), cube2(&cubeGeometry, &m2),
+plane(&planeGeometry, &m2), sphere(&sphereGeometry, &m1),
+wallTexture("WallTexture.jpg"), globeTexture("GlobeTexture.jpg"),
 renderer(&program),
 mouseSensitivity(1000.f)
 {
@@ -39,11 +39,12 @@ void SandboxApplication::startup()
 	planeGeometry.sendData();
 	sphereGeometry.sendData();
 	wallTexture.init();
-	m1.setColor(0.7f, 0.7f, 0.7f, 1.f);
-	m2.setColor(0.9f, 0.3f, 0.5f, 1.f);
+	globeTexture.init();
+	m1.setColor(1.f, 1.f, 1.f, 1.f);
+	m2.setColor(0.3f, 0.7f, 0.5f, 1.f);
 	m1.setLightSource(&lightSource);
 	m2.setLightSource(&lightSource);
-	m1.setTexture(&wallTexture);
+	m1.setTexture(&globeTexture);
 	m2.setTexture(&wallTexture);
 
 	scene.add(&camera);

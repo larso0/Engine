@@ -16,5 +16,5 @@ void main()
     float sh = 50;
     float s = pow(max(dot(reflect(-lightDirection, fNormal), cameraDirection), 0), sh/4);
     vec4 color = texture(objectTexture, fUV)*objectColor;
-    fColor = vec4(0.1f, 0.1f, 0.1f, 1.f) + color*brightness + vec4(s, s, s, 1.f);
+    fColor = vec4(0.1f, 0.1f, 0.1f, 1.f)*color + color*brightness + vec4(s, s, s, 1.f);
 }
