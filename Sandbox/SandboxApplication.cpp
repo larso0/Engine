@@ -14,13 +14,15 @@ using namespace Engine;
 SandboxApplication::SandboxApplication(int argc, char** argv) :
 Engine::Application(argc, argv),
 sphereGeometry(3),
-cube1(&cubeGeometry, &m2), cube2(&cubeGeometry, &m2),
-plane(&planeGeometry, &m2), sphere(&sphereGeometry, &m1),
-wallTexture("WallTexture.jpg"), globeTexture("GlobeTexture.jpg"),
+cube1(&cubeGeometry, &m2), cube2(&cubeGeometry, &m3),
+plane(&planeGeometry, &m4), sphere(&sphereGeometry, &m1),
+wallTexture("WallTexture.jpg"), globeTexture("GlobeTexture.jpg"), redTexture("RedTexture.jpg"),
+grassTexture("GrassTexture.jpg"),
 renderer(&program),
 mouseSensitivity(1000.f)
 {
 	setTitle("Sandbox");
+	setSize(1024, 600);
 }
 
 void SandboxApplication::startup()
@@ -40,12 +42,20 @@ void SandboxApplication::startup()
 	sphereGeometry.sendData();
 	wallTexture.init();
 	globeTexture.init();
+	redTexture.init();
+	grassTexture.init();
 	m1.setColor(1.f, 1.f, 1.f, 1.f);
 	m2.setColor(0.3f, 0.7f, 0.5f, 1.f);
+	m3.setColor(1.f, 1.f, 1.f, 1.f);
+	m4.setColor(1.f, 1.f, 1.f, 1.f);
 	m1.setLightSource(&lightSource);
 	m2.setLightSource(&lightSource);
+	m3.setLightSource(&lightSource);
+	m4.setLightSource(&lightSource);
 	m1.setTexture(&globeTexture);
 	m2.setTexture(&wallTexture);
+	m3.setTexture(&redTexture);
+	m4.setTexture(&grassTexture);
 
 	scene.add(&camera);
 	scene.add(&lightSource);

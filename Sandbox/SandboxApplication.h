@@ -37,8 +37,8 @@ private:
 	Engine::Node scene;
 	Engine::Object cube1, cube2, plane, sphere;
 	Engine::Light lightSource;
-	Engine::Material m1, m2;
-	Engine::Texture wallTexture, globeTexture;
+	Engine::Material m1, m2, m3, m4;
+	Engine::Texture wallTexture, globeTexture, redTexture, grassTexture;
 	Engine::Camera camera;
 	Engine::Renderer renderer;
 	float mouseSensitivity;
