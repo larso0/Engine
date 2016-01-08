@@ -8,17 +8,17 @@
 #ifndef SPHEREGEOMETRY_H
 #define SPHEREGEOMETRY_H
 
-#include "ArrayGeometry.h"
+#include "IndexGeometry.h"
 
 namespace Engine
 {
-	class SphereGeometry : public ArrayGeometry
+	class SphereGeometry : public IndexGeometry
 	{
 	public:
 		SphereGeometry(int level = 0);
 	private:
-		void subdivide(glm::vec3& a, glm::vec3& b, glm::vec3& c, int level);
-		void triangle(glm::vec3& a, glm::vec3& b, glm::vec3& c);
+		void subdivide(GLushort a, GLushort b, GLushort c, int level);
+		GLushort subVertex(GLushort a, GLushort b);
 		static glm::vec2 sphereUv(glm::vec3& p);
 	};
 }
